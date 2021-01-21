@@ -15,3 +15,8 @@ The models I've been trying are doing great validation and training accuracy wis
 - `main.py` - Holds the current code for training the model
 - `predicter.py` - Run this to predict results on a given image or generator
 - `Figures_{}.png` - Val/Train Loss and Accuracy.
+
+## History
+
+Results from running a model, this is the average accuracy and loss.
+![](history-figures/Figure_3.png)
