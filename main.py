@@ -28,18 +28,18 @@ valid_generator = valid_datagen.flow_from_directory(
     target_size=image_size, batch_size=batch_size, directory=training_dataset_directory)
 
 model = tf.keras.Sequential([
-    tf.keras.layers.Conv2D(128, (3, 3), activation='relu',
+    tf.keras.layers.Conv2D(64, (6, 6), activation='relu',
                            input_shape=(100, 100, 3)),
     tf.keras.layers.MaxPooling2D(2, 2),
-    tf.keras.layers.Conv2D(64, (3, 3), activation='relu'),
+    tf.keras.layers.Conv2D(128, (6, 6), activation='relu'),
     tf.keras.layers.MaxPooling2D(2, 2),
-    tf.keras.layers.Conv2D(64, (3, 3), activation='relu'),
+    tf.keras.layers.Conv2D(128, (6, 6), activation='relu'),
     tf.keras.layers.MaxPooling2D(2, 2),
-    tf.keras.layers.Conv2D(32, (3, 3), activation='relu'),
+    tf.keras.layers.Conv2D(256, (6, 6), activation='relu'),
     tf.keras.layers.MaxPooling2D(2, 2),
     tf.keras.layers.Flatten(),
     tf.keras.layers.Dropout(0.3),  # Drop
-    tf.keras.layers.Dense(256, activation='relu'),
+    tf.keras.layers.Dense(512, activation='relu'),
     tf.keras.layers.Dense(
         len(train_generator.class_indices), activation='softmax')
 ])
@@ -55,7 +55,7 @@ model.compile(optimizer='adam',
 history = model.fit(train_generator, epochs=epochs,
                     validation_data=valid_generator, verbose=1, callbacks=[early_stopping])
 
-model.save('models/trained_yolo')
+model.save('models/trained_increased_kernel_and_neurons')
 
 acc = history.history['accuracy']
 val_acc = history.history['val_accuracy']
