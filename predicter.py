@@ -5,37 +5,32 @@ import numpy as np
 import os
 from glob import glob
 
-physical_devices = tf.config.list_physical_devices('GPU')
-tf.config.experimental.set_memory_growth(physical_devices[0], True)
-
-test_dataset_directory = r"C:\Users\wordp\Desktop\Fruit recognizer\fruits-360\Test"
-
-image_size = (100, 100)
-batch_size = 64
-epochs = 5
-seed = 53
-
-test_ds = tf.keras.preprocessing.image_dataset_from_directory(
-    test_dataset_directory,image_size=image_size,
-)
-
 def base(path):
     return os.path.basename(path)
 
-class_names = glob("fruits-360/Training/*")  # Reads all the folders in which images are present
-class_names = list(sorted(map(base, class_names)))  # Sorting them
+image_size = (100, 100)
 
-model = tf.keras.models.load_model('models/trained_high_augmentation_average_filters')
+#Switch this with a generator?
+class_names = glob("fruits-360/Training/*")
+class_names = list(sorted(map(base, class_names)))
+
+model = tf.keras.models.load_model('models/trained_increased_kernel_and_neurons')
 
 img = tf.keras.preprocessing.image.load_img(
     r'C:\Users\wordp\Desktop\avocado.jfif', target_size=image_size
 )
+
 img_array = tf.keras.preprocessing.image.img_to_array(img)
 img_array = tf.expand_dims(img_array, 0)
 
+
 predictions = model.predict(img_array)
 
-print(
-    "This image most likely belongs to {} with a {:.2f} percent confidence."
-        .format(class_names[np.argmax(predictions[0])], 100 * np.max(predictions[0]))
-)
+top_k_values, top_k_indices = tf.nn.top_k(predictions, k=5)
+top_k_indices, top_k_values = (top_k_indices.numpy()[0], top_k_values.numpy()[0])
+
+for idx in range(len(top_k_values)):
+    print(
+        "This image most likely belongs to {} with a {:.2f} percent confidence."
+            .format(class_names[top_k_indices[idx]], 100 * np.max(top_k_values[idx]))
+    )
