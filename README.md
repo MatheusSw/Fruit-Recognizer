@@ -7,7 +7,7 @@ Recognize fruits! Because, why not?
 It's currently using the [Fruits-360](https://www.kaggle.com/moltean/fruits) dataset
 
 ## Challenges
-The models I've been trying are doing great validation and training accuracy wise, however, when it comes to extracing features it's getting a little confused, as it'll constantly mistake avocado for Cucumber with 90%+ confidence, my thought is that it's extracting the "texture" as a feature, but not taking into account overral shape and color.
+The models I've been trying are doing great validation and training accuracy wise, the fruit 360 dataset is very limited only containing 7 fruits in total, therefore I couldn't test it with fruits that look alike, however it's having a really hard time distinguishing a zucchini from a cucumber (I do too).
 
 ## Directory structure
 
